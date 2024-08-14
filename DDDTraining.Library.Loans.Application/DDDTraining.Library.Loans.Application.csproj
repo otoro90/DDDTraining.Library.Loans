@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Mappings\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Mappings\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DDDTraining.Library.Loans.Domain\DDDTraining.Library.Loans.Domain.csproj" />
+	</ItemGroup>
 
 </Project>

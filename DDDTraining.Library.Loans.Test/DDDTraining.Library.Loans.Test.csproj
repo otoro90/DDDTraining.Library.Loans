@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DDDTraining.Library.Loans.Application\DDDTraining.Library.Loans.Application.csproj" />
+  </ItemGroup>
+
 </Project>
