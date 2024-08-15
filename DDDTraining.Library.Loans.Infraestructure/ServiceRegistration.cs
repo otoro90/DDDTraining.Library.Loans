@@ -11,7 +11,7 @@ namespace DDDTraining.Library.Loans.Infraestructure
 {
     public static class ServiceRegistration
     {
-        public static void AddDatabaseInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static void AddDatabaseInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabaseContext(configuration)
                 .RegisterRepositories();

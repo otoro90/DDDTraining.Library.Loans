@@ -1,9 +1,16 @@
+using DDDTraining.Library.Loans.Infraestructure;
+using DDDTraining.Library.Loans.Application;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using DDDTraining.Library.Loans.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddApplicationConfiguration(builder.Configuration);
+builder.Services.AddDatabaseInfraestructure(builder.Configuration);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

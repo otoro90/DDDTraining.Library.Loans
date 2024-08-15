@@ -24,23 +24,35 @@ namespace DDDTraining.Library.Loans.Infraestructure.DBContext
                 {
                     email.Property(e => e.Address).IsRequired().HasMaxLength(128);
                 });
+
+                entity.HasMany(o => o.Loans)
+                    .WithOne(ol => ol.User)
+                    .HasForeignKey(ol => ol.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Book>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_USER");
+                    .HasName("PK_BOOK");
+
+                entity.HasMany(o => o.Loans)
+                    .WithOne(ol => ol.Book)
+                    .HasForeignKey(ol => ol.BookId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<Loan>( entity =>
+            modelBuilder.Entity<Loan>(entity =>
             {
-                entity.HasOne(p => p.User)
-                .WithMany()
-                .HasForeignKey(p => p.User.Id);
+                entity.HasOne(e => e.User)
+                .WithMany(e => e.Loans)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(p => p.Book)
-                .WithMany()
-                .HasForeignKey(p => p.Book.Id);
+                entity.HasOne(e => e.Book)
+                .WithMany(e => e.Loans)
+                .HasForeignKey(e => e.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             OnModelCreatingPartial(modelBuilder);
