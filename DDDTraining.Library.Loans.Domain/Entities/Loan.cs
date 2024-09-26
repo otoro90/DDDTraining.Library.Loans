@@ -8,6 +8,8 @@
             Id = id;
             User = user ?? throw new ArgumentNullException(nameof(user));
             Book = book ?? throw new ArgumentNullException(nameof(book));
+            UserId = user.Id;
+            BookId = book.Id;
             LoanDate = DateTime.UtcNow;
             ReturnDate = null;
             book.MarkAsUnavailable();

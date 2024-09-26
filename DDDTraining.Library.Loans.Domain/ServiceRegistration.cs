@@ -8,9 +8,7 @@ namespace DDDTraining.Library.Loans.Domain
     {
         public static void AddDomainConfiguration(this IServiceCollection services)
         {
-
             services.RegisterDomainServices();
-
         }
 
         private static IServiceCollection RegisterDomainServices(this IServiceCollection services)
