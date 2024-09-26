@@ -17,7 +17,7 @@ namespace DDDTraining.Library.Loans.Application.Features.Loan.Commands
 
         public async Task<Guid> Handle(MakeLoanCmdRequest request, CancellationToken cancellationToken)
         {
-            var loan = _loanService.MakeLoan(request.UserId, request.BookId);
+            var loan = _loanService.MakeLoanAsync(request.UserId, request.BookId);
             await _mediator.Publish(new LoanCreatedEvent(loan.Id, request.UserId, request.BookId), cancellationToken);
             return loan.Id;
         }

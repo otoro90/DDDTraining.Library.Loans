@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DDDTraining.Library.Loans.Application.Features.Users.Commands
 {
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
+    public class RegisterUserCommandHandler : IRequestHandler<RegistrerUserCmdRequest, Guid>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -17,14 +17,14 @@ namespace DDDTraining.Library.Loans.Application.Features.Users.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Guid> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(RegistrerUserCmdRequest request, CancellationToken cancellationToken)
         {
             var email = new Email(request.Email); // Assuming Email is a Value Object
             var user = new User(Guid.NewGuid(), request.Name, email);
 
             _userRepository.Add(user); // Implement the Add method in IUserRepository
-            _unitOfWork.CommitAsync(cancellationToken);
-            return Task.FromResult(user.Id);
+            await _unitOfWork.CommitAsync(cancellationToken);
+            return user.Id;
         }
     }
 

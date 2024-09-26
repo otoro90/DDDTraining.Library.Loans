@@ -5,7 +5,7 @@ namespace DDDTraining.Library.Loans.Domain.Services.Interfaces
 {
     public interface ILoanService : IDomainService
     {
-        Loan MakeLoan(Guid userId, Guid bookId);
+        Loan MakeLoanAsync(Guid userId, Guid bookId);
         void ReturnBook(Loan loan);
     }
 

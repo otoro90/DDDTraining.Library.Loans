@@ -16,7 +16,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
+        public async Task<IActionResult> RegisterUser([FromBody] RegistrerUserCmdRequest command)
         {
             if (command == null)
                 return BadRequest("Invalid user data.");

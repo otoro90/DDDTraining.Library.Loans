@@ -20,7 +20,7 @@ namespace DDDTraining.Library.Loans.Domain.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Loan MakeLoan(Guid userId, Guid bookId)
+        public async Task<Loan> MakeLoanAsync(Guid userId, Guid bookId)
         {
             var user = _userRepository.GetById(userId);
             var book = _bookRepository.GetById(bookId);
@@ -36,7 +36,7 @@ namespace DDDTraining.Library.Loans.Domain.Services
 
             var loan = new Loan(Guid.NewGuid(), user, book);
             _loanRepository.Add(loan);
-            _unitOfWork.CommitAsync(default);
+            await _unitOfWork.CommitAsync(default);
             return loan;
         }
 

@@ -2,7 +2,7 @@
 
 namespace DDDTraining.Library.Loans.Application.Features.Books.Commands
 {
-    public class RegisterBookCommand : IRequest<Guid>
+    public class RegistrerBookCmdRequest : IRequest<Guid>
     {
         public string Title { get; set; }
         public string Author { get; set; }

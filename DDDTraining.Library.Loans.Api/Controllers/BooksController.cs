@@ -16,7 +16,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterBook([FromBody] RegisterBookCommand command)
+        public async Task<IActionResult> RegisterBook([FromBody] RegistrerBookCmdRequest command)
         {
             if (command == null)
                 return BadRequest("Invalid book data.");
