@@ -18,7 +18,8 @@ namespace DDDTraining.Library.Loans.Infraestructure.Repositories
 
         public Loan GetById(Guid id)
         {
-            return _context.Loans.Include(p => p.User)
+            return _context.Loans
+                .Include(p => p.User)
                 .Include(p => p.Book)
                 .FirstOrDefault(p => p.Id == id);
         }

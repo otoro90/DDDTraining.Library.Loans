@@ -40,10 +40,13 @@ namespace DDDTraining.Library.Loans.Domain.Services
             return loan;
         }
 
-        public void ReturnBook(Loan loan)
+        public Loan ReturnBook(Guid loanId)
         {
+            var loan = _loanRepository.GetById(loanId);
             loan.ReturnBook();
             _loanRepository.Update(loan);
+
+            return loan;
         }
     }
 
