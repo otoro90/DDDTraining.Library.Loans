@@ -40,14 +40,15 @@ namespace DDDTraining.Library.Loans.Domain.Services
             return loan;
         }
 
-        public Loan ReturnBook(Guid loanId)
+        public async Task<Loan> ReturnBookAsync(Guid loanId)
         {
             var loan = _loanRepository.GetById(loanId);
             loan.ReturnBook();
             _loanRepository.Update(loan);
 
+            await _unitOfWork.CommitAsync(default);
+
             return loan;
         }
     }
-
 }

@@ -60,51 +60,56 @@ namespace DDDTraining.Library.Loans.Test.DomainServices
         }
 
         [Fact]
-        public void ReturnBook_Should_ThrowException_IfBookAlreadyReturned()
+        public async Task ReturnBook_Should_ThrowException_InvalidOperationExceptionAsync()
         {
-            // Arrange
+            //arrange
             var loanFiller = new Filler<Loan>();
             loanFiller.Setup()
                 .OnProperty(loan => loan.Book.IsAvailable).Use(true)
                 .OnProperty(loan => loan.Book.Loans).IgnoreIt()
+                .OnType<Email>().Use(new Email("omigueltoro@gmail.com"))
                 .OnType<List<Loan>>().IgnoreIt()
-                .OnType<Email>().Use(new Email("otoro@gmail.com"))
                 .ListItemCount(1);
 
-            var loan = loanFiller.Create();
+            var loan  = loanFiller.Create();
 
-            _mockLoanRepository.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(loan);
+            _mockLoanRepository.Setup(repositorio => repositorio.GetById(It.IsAny<Guid>())).Returns(loan);
 
-            // Act and Assert
-            var exception = Assert.Throws<InvalidOperationException>(() => _loanService.ReturnBook(loan.Id));
+            // act y assert
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _loanService.ReturnBookAsync(loan.Id));
+
             Assert.Equal("The book has already been returned.", exception.Message);
         }
 
         [Fact]
-        public void ReturnBookSuccessTest()
+        public async Task ReturnBook_Success_TestAsync()
         {
-            // Arrange
+            //arrange
             var loanFiller = new Filler<Loan>();
             loanFiller.Setup()
+                .OnType<Email>().Use(new Email("omigueltoro@gmail.com"))
                 .OnProperty(loan => loan.ReturnDate).IgnoreIt()
                 .OnProperty(loan => loan.Book.IsAvailable).Use(false)
                 .OnProperty(loan => loan.Book.Loans).IgnoreIt()
                 .OnType<List<Loan>>().IgnoreIt()
-                .OnType<Email>().Use(new Email("otoro@gmail.com"))
                 .ListItemCount(1);
 
             var loan = loanFiller.Create();
 
-            _mockLoanRepository.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(loan);
-            _mockLoanRepository.Setup(repo => repo.Update(It.IsAny<Loan>())).Verifiable();
+            _mockLoanRepository.Setup(repositorio => repositorio.GetById(It.IsAny<Guid>())).Returns(loan);
 
-            //Act
-            var result = _loanService.ReturnBook(loan.Id);
+            // act 
 
-            //Assert
-            _mockLoanRepository.Verify(repositorio => repositorio.Update(It.IsAny<Loan>()), "Debe actualizar el prestamo");
-            result.Book.IsAvailable.Should().BeTrue();
+            var result = await _loanService.ReturnBookAsync(loan.Id);
+
+            // assert
+            _mockLoanRepository.Verify(repo => repo.GetById(It.IsAny<Guid>()), "Debe llamar al serivio GetById de LoanRepository");
+            _mockLoanRepository.Verify(repo => repo.Update(It.IsAny<Loan>()), "Debe llamar al serivio Update de LoanRepository");
+            result.Should().NotBeNull();
             result.ReturnDate.Should().NotBeNull();
+            result.Book.IsAvailable.Should().BeTrue();
+
         }
+
     }
 }

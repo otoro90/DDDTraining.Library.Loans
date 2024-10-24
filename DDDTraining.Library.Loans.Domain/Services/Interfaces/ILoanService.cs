@@ -6,7 +6,7 @@ namespace DDDTraining.Library.Loans.Domain.Services.Interfaces
     public interface ILoanService : IDomainService
     {
         Task<Loan> MakeLoanAsync(Guid userId, Guid bookId);
-        Loan ReturnBook(Guid loanId);
+        Task<Loan> ReturnBookAsync(Guid loanId);
     }
 
 }
